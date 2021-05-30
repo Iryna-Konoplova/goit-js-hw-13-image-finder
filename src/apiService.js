@@ -8,11 +8,14 @@ export default class NewsApiService {
         this.page = 1;
     }
     
-    fetchArticles() {
+    fetchImages() {
         const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`;
 
         return fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) return response.json();
+                throw new Error('Error fatching data');
+            })
             .then(({ hits }) => {
                 // console.log(data)
                 this.page += 1;
@@ -30,6 +33,5 @@ export default class NewsApiService {
 
     set query(newQuery) {
         this.searchQuery = newQuery;
-    }
-    
+    } 
 }
