@@ -6,10 +6,11 @@ export default class NewsApiService {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
+        this.per_page = 12;
     }
     
     fetchImages() {
-        const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`;
+        const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=${this.per_page}&key=${API_KEY}`;
 
         return fetch(url)
             .then(response => {
@@ -17,8 +18,8 @@ export default class NewsApiService {
                 throw new Error('Error fatching data');
             })
             .then(({ hits }) => {
-                // console.log(data)
                 this.page += 1;
+                // console.log(hits)
                 return hits;
             });
     }

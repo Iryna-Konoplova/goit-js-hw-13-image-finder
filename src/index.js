@@ -18,10 +18,10 @@ refs.searchForm.addEventListener('submit', onSearch)
 refs.loadMoreBtn.addEventListener('click', onLoadMore)
 
 function onSearch(e) {
-    e.preventDefault();
-    clearContainer();
-
-    newsApiService.query = e.currentTarget.elements.query.value.trim();
+  e.preventDefault();
+  clearContainer();
+  
+  newsApiService.query = e.currentTarget.elements.query.value.trim();
     
     if (!newsApiService.query.length) {
     error({
@@ -34,26 +34,41 @@ function onSearch(e) {
     return;
   }
 
-    newsApiService.resetPage();
-    newsApiService.fetchImages().then(addImageMarkup).catch(onFetchError);
-    
+  newsApiService.resetPage();
+  
+  newsApiService.fetchImages()
+    .then(addImageMarkup)
+    .catch(onFetchError);
+  
+  newsApiService.fetchImages()
+    .then(removeСlassToButtonLoadMore)
+    .catch(onFetchError);
 }
 
 function onLoadMore() {
-    newsApiService.fetchImages().then(addImageMarkup).catch(onFetchError);
+  newsApiService.fetchImages()
+    .then(addImageMarkup)
+    .catch(onFetchError);
 
-    refs.galleryContainer.scrollIntoView({
-       behavior: 'smooth',
-       block: 'end',
-    });   
+  refs.galleryContainer.scrollIntoView({
+     behavior: 'smooth',
+     block: 'end',
+  });   
 }
 
 function addImageMarkup(hits) {
-    refs.galleryContainer.insertAdjacentHTML('beforeend', imageCardTpl(hits));
+  refs.galleryContainer.insertAdjacentHTML('beforeend', imageCardTpl(hits));
 }
 
 function clearContainer() {
-    refs.galleryContainer.innerHTML = '';
+  refs.galleryContainer.innerHTML = '';
+}
+
+function removeСlassToButtonLoadMore(hits) {
+  if (hits.length >= 12) {
+    // console.log(hits)
+    refs.loadMoreBtn.classList.remove('load-more');
+  }
 }
 
 function onFetchError(er) {
@@ -67,14 +82,6 @@ function onFetchError(er) {
   }); 
 }
 
-refs.galleryContainer.addEventListener('click', onClick);
-function onClick(e) {
-  if (e.target.nodeName !== 'IMG') {
-    return;
-  }
-  const ref = e.target.currentSrc;
-  const instance = basicLightbox.create(`< src='${ref}' alt='${1}'>`).show();
-}
 
 
 // refs.galleryContainer.addEventListener('click', onClick);
@@ -82,6 +89,7 @@ function onClick(e) {
 //   if (e.target.nodeName !== 'IMG') {
 //     return;
 //   }
-//   const ref = e.target.dataset.ref;
-//   const instance = basicLightbox.create(`<img src='${ref}' alt='${1}'>`).show();
+//   const ref = e.target.currentSrc;
+//   const instance = basicLightbox.create(`< src='${ref}' alt='${1}'>`).show();
 // }
+

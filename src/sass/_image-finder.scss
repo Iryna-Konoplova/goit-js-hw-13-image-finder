@@ -33,7 +33,12 @@ button {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 30px;
   width: 120px;
+}
+
+.load-more {
+  display: none;
 }
 
 .gallery {
@@ -45,6 +50,7 @@ button {
   width: calc((100% - 90px) / 4);
   margin-right: 30px;
   margin-bottom: 30px;
+  height: 300px;
 }
 
 .photo-card:nth-child(4n) {
@@ -54,9 +60,10 @@ button {
 .stats {
   display: flex;
   justify-content: space-around;
+  align-items: flex-end;
 }
 
 // .stats-item {
-//   display: flex;
-//   flex-direction: row;
+//   // margin-top: 0;
+//   margin-bottom: auto;
 // }
