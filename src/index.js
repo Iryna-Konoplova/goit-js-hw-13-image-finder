@@ -48,16 +48,15 @@ function onSearch(e) {
 function onLoadMore() {
   newsApiService.fetchImages()
     .then(addImageMarkup)
-    .catch(onFetchError);
-
-  refs.galleryContainer.scrollIntoView({
-     behavior: 'smooth',
-     block: 'end',
-  });   
+    .catch(onFetchError);  
 }
 
 function addImageMarkup(hits) {
   refs.galleryContainer.insertAdjacentHTML('beforeend', imageCardTpl(hits));
+  refs.galleryContainer.scrollIntoView({
+     behavior: 'smooth',
+     block: 'end',
+  });
 }
 
 function clearContainer() {
